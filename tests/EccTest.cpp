@@ -190,3 +190,19 @@ TEST(EccTest, test17)
 
 	EXPECT_EQ(1, int(copy));
 }
+
+TEST(EccTest, test18)
+{
+    Ecc<int> original = 1;
+
+    EXPECT_TRUE(original == 1);
+}
+
+TEST(EccTest, test19)
+{
+    Ecc<int> target = 1;
+    Ecc<int> copy = target;
+
+    EXPECT_TRUE(target == copy);
+}
+
