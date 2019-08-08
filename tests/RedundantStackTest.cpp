@@ -117,6 +117,82 @@ TEST_F(RedundantStackTest, PushPop1MemoryErrorInOffset2)
     EXPECT_EQ(1U, stack.pop());
 }
 
+TEST_F(RedundantStackTest, PushPop1MemoryErrorInRedundantStackCopy1Offset1)
+{
+    stack.push(1);
+    stack.push(2);
+
+    redundantStack.makeRedundancy(stack.getSP());
+    redundantStack.makeNoiseToCopy1(1, 3);
+    redundantStack.correctError();
+
+    EXPECT_EQ(2U, stack.pop());
+    EXPECT_EQ(1U, stack.pop());
+}
+
+TEST_F(RedundantStackTest, PushPop1MemoryErrorInRedundantStackCopy1Offset2)
+{
+    stack.push(1);
+    stack.push(2);
+
+    redundantStack.makeRedundancy(stack.getSP());
+    redundantStack.makeNoiseToCopy1(2, 3);
+    redundantStack.correctError();
+
+    EXPECT_EQ(2U, stack.pop());
+    EXPECT_EQ(1U, stack.pop());
+}
+
+TEST_F(RedundantStackTest, PushPop1MemoryErrorInRedundantStackCopy2Offset1)
+{
+    stack.push(1);
+    stack.push(2);
+
+    redundantStack.makeRedundancy(stack.getSP());
+    redundantStack.makeNoiseToCopy2(1, 3);
+    redundantStack.correctError();
+
+    EXPECT_EQ(2U, stack.pop());
+    EXPECT_EQ(1U, stack.pop());
+}
+
+TEST_F(RedundantStackTest, PushPop1MemoryErrorInRedundantStackCopy2Offset2)
+{
+    stack.push(1);
+    stack.push(2);
+
+    redundantStack.makeRedundancy(stack.getSP());
+    redundantStack.makeNoiseToCopy2(2, 3);
+    redundantStack.correctError();
+
+    EXPECT_EQ(2U, stack.pop());
+    EXPECT_EQ(1U, stack.pop());
+}
+
+TEST_F(RedundantStackTest, PushPop2MemoryErrorInStack2Place)
+{
+    stack.push(1);
+    stack.push(2);
+
+    redundantStack.makeRedundancy(stack.getSP());
+    stack.makeNoise(2, 6);
+
+    stack.push(3);
+    stack.push(4);
+    redundantStack.makeRedundancy(stack.getSP());
+    stack.makeNoise(1, 5);
+    
+    redundantStack.correctError();
+
+    EXPECT_EQ(4U, stack.pop());
+    EXPECT_EQ(3U, stack.pop());
+
+    redundantStack.correctError();
+
+    EXPECT_EQ(2U, stack.pop());
+    EXPECT_EQ(1U, stack.pop());
+}
+
 //
 // End of File
 //
