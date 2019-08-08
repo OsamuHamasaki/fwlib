@@ -75,7 +75,7 @@ protected:
     RedundantStack redundantStack;
 
 protected:
-    void SetUp() { redundantStack.initialSP(stack.getSP()); }
+    void SetUp() { redundantStack.setInitialSP(stack.getSP()); }
     void TearDown() {}
 };
 
@@ -85,6 +85,32 @@ TEST_F(RedundantStackTest, PushPopNoMemoryError)
     stack.push(2);
 
     redundantStack.makeRedundancy(stack.getSP());
+    redundantStack.correctError();
+
+    EXPECT_EQ(2U, stack.pop());
+    EXPECT_EQ(1U, stack.pop());
+}
+
+TEST_F(RedundantStackTest, PushPop1MemoryErrorInOffset1)
+{
+    stack.push(1);
+    stack.push(2);
+
+    redundantStack.makeRedundancy(stack.getSP());
+    stack.makeNoise(1, 3);
+    redundantStack.correctError();
+
+    EXPECT_EQ(2U, stack.pop());
+    EXPECT_EQ(1U, stack.pop());
+}
+
+TEST_F(RedundantStackTest, PushPop1MemoryErrorInOffset2)
+{
+    stack.push(1);
+    stack.push(2);
+
+    redundantStack.makeRedundancy(stack.getSP());
+    stack.makeNoise(2, 3);
     redundantStack.correctError();
 
     EXPECT_EQ(2U, stack.pop());
