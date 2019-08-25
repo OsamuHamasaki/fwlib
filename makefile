@@ -1,7 +1,7 @@
 # ~/makefile
 # variables
 
-PROJECT := LampControl
+PROJECT := fwlib
 SUFFIX := .exe
 
 SOURCE_DIR := src
@@ -16,7 +16,6 @@ PROJECTS_DIR := $(HOME)/projects
 CPPFLAGS :=
 CPPFLAGS += -Wall
 CPPFLAGS += -I$(INCLUDE_DIR)
-CPPFLAGS += -I$(SOURCE_DIR)
 CPPFLAGS += -I$(TESTS_DIR)
 CPPFLAGS += -I$(PROJECTS_DIR)/include
 CPPFLAGS += -MMD
