@@ -206,3 +206,31 @@ TEST(EccTest, test19)
     EXPECT_TRUE(target == copy);
 }
 
+int test20program(int i)
+{
+    return i * 2;
+}
+
+typedef int (*FUNCTYPE)(int);
+
+TEST(EccTest, test20)
+{
+    Ecc<int(*)(int)> pFunc = test20program;
+
+    EXPECT_EQ(4, (*pFunc)(2));
+}
+
+TEST(EccTest, test21)
+{
+    Ecc<FUNCTYPE> pFunc = test20program;
+
+    EXPECT_EQ(8, (*pFunc)(4));
+}
+
+TEST(EccTest, test22)
+{
+    Ecc<FUNCTYPE> pFunc = test20program;
+
+    EXPECT_EQ(16, pfunc(8));
+}
+
